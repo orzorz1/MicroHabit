@@ -1,16 +1,76 @@
 {
 	"pages": [ //pages数组中第一项表示应用启动页，参考：https://uniapp.dcloud.io/collocation/pages
 		{
-			"path": "pages/index/index",
+			"path": "pages/index/habit/habit",
 			"style": {
-				"navigationBarTitleText": "uni-app"
+				"navigationStyle":"custom", //隐藏标题栏
+				"navigationBarTitleText": "微习惯"
 			}
-		}
-	],
+		},
+		{
+			"path": "pages/index/home/home",
+			"style": {
+				"navigationStyle":"custom",
+				"navigationBarTitleText": ""
+			}
+		},
+	    {
+            "path" : "components/BottomNavigation",
+            "style" :                                                                                    
+            {
+				"navigationStyle":"custom",
+                "navigationBarTitleText": "",
+                "enablePullDownRefresh": false //禁用下拉刷新
+            }
+            
+        },	    
+		{
+            "path" : "components/hi",
+            "style" :                                                                                    
+            {
+				"navigationStyle":"custom",
+                "navigationBarTitleText": "",
+                "enablePullDownRefresh": false
+            }
+            
+        },
+		{
+		    "path" : "pages/index/catalogue/accountSet/accountSet",
+		    "style" :                                                                                    
+		    {
+		        "navigationBarTitleText": "账号设置",
+		        "enablePullDownRefresh": false,
+				"navigationBarBackgroundColor":"#dce6eb"//标题栏颜色
+		    }
+		    
+		},
+
+		{
+			"path" : "pages/index/catalogue/list/list",
+			"style" :                                                                                    
+			{
+				"navigationBarTitleText": "排行榜",
+				"enablePullDownRefresh": false,
+				"navigationBarBackgroundColor":"#dce6eb"
+			}
+		},
+        {
+            "path" : "pages/index/my/my",
+            "style" :                                                                                    
+            {
+				"navigationStyle":"custom",
+                "navigationBarTitleText": "",
+                "enablePullDownRefresh": false
+            }    
+        }
+    ],
 	"globalStyle": {
 		"navigationBarTextStyle": "black",
 		"navigationBarTitleText": "uni-app",
 		"navigationBarBackgroundColor": "#F8F8F8",
-		"backgroundColor": "#F8F8F8"
+		"backgroundColor": "#F8F8F8",
+		"style":{
+		"app-plus":{"titleNView":false}	
+		}
 	}
 }
