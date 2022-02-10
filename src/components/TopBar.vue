@@ -1,7 +1,7 @@
 <template>
 	<view>
 		<!-- 顶部栏 -->
-		<view class="topBar">
+		<view class="topBar" :style="{top:menuButton_top,height:menuButton_height}">
 			<image class="catalogueBtn" src="../static/icon/catalogue.png" @tap="showCata()"></image>
 			<image class="plusBtn" src="../static/icon/plus.png" @tap="createHabit"></image>			
 		</view>
@@ -19,8 +19,8 @@
 			<view class="createHabitTitle">
 				<view style="font-size: 2.3vh;margin-left: 5vw;">添加新习惯</view>
 				<view>
-					<image src="../static/icon/catalogue.png" style="width: 4vh;height: 4vh;margin-right: 5vw;margin-top:0.5vh" @tap="closeCreate"></image>
-					<image src="../static/icon/plus.png" style="width: 4vh;height: 4vh;margin-right: 5vw;margin-top:0.5vh" @tap="addHabit"></image>
+					<image src="../static/icon/yes.svg" style="width: 4vh;height: 4vh;margin-right: 5vw;margin-top:0.5vh" @tap="closeCreate"></image>
+					<image src="../static/icon/no.svg" style="width: 4vh;height: 4vh;margin-right: 5vw;margin-top:0.5vh" @tap="addHabit"></image>
 				</view>
 			</view>
 			
@@ -54,17 +54,10 @@
 					<view class="createHabitTitle" style="width:70vw;height:5vh">
 						<view style="font-size: 2.2vh;margin-left: 5vw;">调整阶段天数</view>
 						<view>
-							<image src="../static/icon/catalogue.png" style="width: 3vh;height: 3vh;margin-right: 3vw; margin-top:1vh" @tap="closePicker(index)"></image>
-							<image src="../static/icon/plus.png" style="width: 3vh;height: 3vh;margin-right: 3vw; margin-top:1vh" @tap="setTime(index)"></image>
+							<image src="../static/icon/yes.svg" style="width: 3vh;height: 3vh;margin-right: 3vw; margin-top:1vh" @tap="closePicker(index)"></image>
+							<image src="../static/icon/no.svg" style="width: 3vh;height: 3vh;margin-right: 3vw; margin-top:1vh" @tap="setTime(index)"></image>
 						</view>
 					</view>
-		<!-- 			<view class="top">
-						<view style="font-size: 2.2vh;font-weight: 500;">调整阶段天数</view>
-						<view>
-							<view style="margin-left: 5vw;" @tap="closePicker(index)">取消</view>
-							<view style="margin-right: 5vw; color: #3f8dcf;" @click="setTime(index)">确定</view>
-						</view>
-					</view> -->
 					<picker-view class="timePicker" @change="chooseTime">
 						<picker-view-column style="left: 12vw; font-size: 2vh;">
 							<view >第{{begin}}天</view>
@@ -92,6 +85,8 @@
 		name:"TopBar",
 		data() {
 			return {
+				menuButton_top:"4vh",
+				menuButton_height:"30px",
 				showCatalogue:false,
 				creatingHabit:false,
 				disableInput:false,
@@ -104,6 +99,12 @@
 				beginToEnd:[],
 				end:2,
 			};
+		},
+		created() {
+			let menuButtonInfo = uni.getMenuButtonBoundingClientRect()
+			this.menuButton_top = menuButtonInfo.top+"px"
+			this.menuButton_height = menuButtonInfo.height+"px"
+			console.log(this.menuButton_height)
 		},
 		methods:{
 			showCata(){
@@ -193,6 +194,7 @@
 <style>
 	.habitName{
 		font-size: 2.2vh; 
+		height: 50px;
 		display: flex; 
 		flex-direction: column;
 		align-items: center; 
@@ -207,8 +209,6 @@
 	.topBar{
 		z-index: 10;
 		position: fixed;
-		top:4vh;
-		height: 50px;
 		width: 100%;
 		display: flex;
 		align-items: center;

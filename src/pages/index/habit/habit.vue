@@ -4,7 +4,7 @@
 		<BottomNavigation></BottomNavigation>
 		<view id="habit">
 			<view class="main">
-				<view v-for="(habit,index) in habits" class="habits" :style="{background:((index%2)===0)?'#ddeff8':'#fcf5c9'}">
+				<view v-for="(habit,index) in habits" class="habits" :style="{background:(habit.showTick===true)?'#b8b6b4':((index%2)===0)?'#ddeff8':'#fcf5c9'}">
 					<view class="habitContent">
 						<view>
 						<view style="width: 60vw;text-align:left;font-size:2.5vh;">{{habit.name}}</view>
@@ -36,12 +36,23 @@
 		},
 		methods: {
 			finishHabit(index){
-				let that=this
-				this.habits[index].showTick=true
-				setTimeout(function(){
-					that.habits.splice(index, 1);
-				},1000)
-
+				//完成习惯不显示
+				// let that=this
+				// this.habits[index].showTick=true
+				// setTimeout(function(){
+				// 	that.habits.splice(index, 1);
+				// },1000)
+				
+				//完成放最后
+				if(this.habits[index].showTick!=true){
+					this.habits[index].showTick=true
+					let that=this
+					setTimeout(function(){
+						let temp = that.habits[index]
+						that.habits.splice(index, 1);
+						that.habits.push(temp)
+					},500)
+				}
 			}
 		},
 		components:{
