@@ -34,7 +34,7 @@
 			}
 		},
 		created() {
-		 this.changecolor()
+			this.changecolor()
 		},
 		methods: {
 			changecolor(){
@@ -76,18 +76,18 @@
 			},
 			goHome(){
 				uni.redirectTo({
-				                url: '/pages/index/home/home',
-				            });
+					url: '/pages/index/home/home',
+				});
 			},
 			goHabit(){
 				uni.redirectTo({
-				                url: '/pages/index/habit/habit',
-				            });
+					url: '/pages/index/habit/habit',
+				});
 			},
 			goMy(){
 				uni.redirectTo({
-				                url: '/pages/index/my/my',
-				            });
+					url: '/pages/index/my/my',
+				});
 			},
 			
 		}
