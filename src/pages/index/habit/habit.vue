@@ -27,10 +27,10 @@
 		data() {
 			return {
 				habits:[
-					{"id":"0000010001","name":"英语","content":"背3500个单词","showTick":false},
-					{"id":"0000010002","name":"健身","content":"做1000个卷腹","showTick":false},
-					{"id":"0000010003","name":"阅读","content":"看100000本书","showTick":false},
-					{"id":"0000010004","name":"写作","content":"写10000000字","showTick":false},
+					{"id":"0000010001","name":"英语","content":"背35个单词","showTick":false},
+					{"id":"0000010002","name":"健身","content":"做10个卷腹","showTick":false},
+					{"id":"0000010003","name":"阅读","content":"看10页书","showTick":false},
+					{"id":"0000010004","name":"写作","content":"写100字","showTick":false},
 				],
 			}
 		},
