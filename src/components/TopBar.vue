@@ -19,8 +19,8 @@
 			<view class="createHabitTitle">
 				<view style="font-size: 2.3vh;margin-left: 5vw;">添加新习惯</view>
 				<view>
-					<image src="../static/icon/yes.svg" style="width: 4vh;height: 4vh;margin-right: 5vw;margin-top:0.5vh" @tap="closeCreate"></image>
-					<image src="../static/icon/no.svg" style="width: 4vh;height: 4vh;margin-right: 5vw;margin-top:0.5vh" @tap="addHabit"></image>
+					<image src="../static/icon/no.svg" style="width: 4vh;height: 4vh;margin-right: 5vw;margin-top:0.5vh" @tap="closeCreate"></image>
+					<image src="../static/icon/yes.svg" style="width: 4vh;height: 4vh;margin-right: 5vw;margin-top:0.5vh" @tap="addHabit"></image>
 				</view>
 			</view>
 			
@@ -54,8 +54,8 @@
 					<view class="createHabitTitle" style="width:70vw;height:5vh">
 						<view style="font-size: 2.2vh;margin-left: 5vw;">调整阶段天数</view>
 						<view>
-							<image src="../static/icon/yes.svg" style="width: 3vh;height: 3vh;margin-right: 3vw; margin-top:1vh" @tap="closePicker(index)"></image>
-							<image src="../static/icon/no.svg" style="width: 3vh;height: 3vh;margin-right: 3vw; margin-top:1vh" @tap="setTime(index)"></image>
+							<image src="../static/icon/no.svg" style="width: 3vh;height: 3vh;margin-right: 3vw; margin-top:1vh" @tap="closePicker(index)"></image>
+							<image src="../static/icon/yes.svg" style="width: 3vh;height: 3vh;margin-right: 3vw; margin-top:1vh" @tap="setTime(index)"></image>
 						</view>
 					</view>
 					<picker-view class="timePicker" @change="chooseTime">

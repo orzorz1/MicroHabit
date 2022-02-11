@@ -97,7 +97,7 @@
 				//主页面数据
 				username:"别人家的孩子",
 				sexual:"男",
-				birthday:"0000-00-00",
+				birthday:"2000-1-1",
 				accounts:[{'id_type':'邮箱账号','id':'ZhangSan000@gmail.com'},
 						  {'id_type':'微博账号','id':'ZhangSan000'}],
 				// 控制修改页弹出

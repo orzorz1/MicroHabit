@@ -2,14 +2,14 @@
 	<view>
 		<TopBar></TopBar>
 		<BottomNavigation></BottomNavigation>
-
-		
+		<habbit></habbit>
 	</view>
 </template>
 
 <script>
 	import BottomNavigation from '../../../components/BottomNavigation.vue'
 	import TopBar from '../../../components/TopBar.vue';
+	import habbit from '../habit/habit.vue'
 	export default {
 		data() {
 			return {
@@ -21,7 +21,8 @@
 		},
 		components:{
 			TopBar,
-			BottomNavigation
+			BottomNavigation,
+			habbit
 		}
 	}
 </script>
