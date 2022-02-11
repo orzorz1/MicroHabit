@@ -31,6 +31,10 @@
 					{"id":"0000010002","name":"健身","content":"做10个卷腹","showTick":false},
 					{"id":"0000010003","name":"阅读","content":"看10页书","showTick":false},
 					{"id":"0000010004","name":"写作","content":"写100字","showTick":false},
+					{"id":"0000010001","name":"英语","content":"背35个单词","showTick":false},
+					{"id":"0000010002","name":"健身","content":"做10个卷腹","showTick":false},
+					{"id":"0000010003","name":"阅读","content":"看10页书","showTick":false},
+					{"id":"0000010004","name":"写作","content":"写100字","showTick":false},
 				],
 			}
 		},
@@ -74,12 +78,14 @@
 	}
 	.main{
 		position: fixed;
+		
 		bottom: 0;
 		width: 100%;
-		height: 72vh;
+		height: 61vh;
 		background-color: #fdfcf9;
 		border-radius: 20px 20px 0px 0px;
 		padding-top: 3vh;
+		padding-bottom:11vh;
 		-webkit-overflow-scrolling: touch;
 		overflow-x: scroll;
 		
