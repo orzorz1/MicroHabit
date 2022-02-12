@@ -63,6 +63,16 @@
                 "enablePullDownRefresh": false
             }    
         }
+        ,{
+            "path" : "pages/index/catalogue/finishedHabit/finishedHabit",
+            "style" :                                                                                    
+            {
+                "navigationBarTitleText": "",
+				"navigationStyle":"custom", 
+                "enablePullDownRefresh": false
+            }
+            
+        }
     ],
 	"globalStyle": {
 		"navigationBarTextStyle": "black",

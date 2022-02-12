@@ -9,8 +9,19 @@
 		<view v-if="showCatalogue" @tap="closeCata" class="mask">
 		</view>			
 		<view class="catalogue" v-if="showCatalogue">
-			<view style="width: 100%; height:15%;"></view>
-			<view>目录</view>
+			<view class="accountInfo">
+				<image class="avatar" :src="userInfo.avatar"></image>
+				<view class="username">
+					<view>{{userInfo.username}}</view>
+					<view style="font-size: 1.5vh;">{{userInfo.score}}</view>
+				</view>
+			</view>
+			<view class="cata">
+				<view class="item" v-for="(item,index) in catalogue">
+					<image class="icon" :src="item.icon"></image>
+					<view style="font-size: 2.2vh; color: #36556a;">{{item.name}}</view>
+				</view>
+			</view>
 		</view>
 		<!-- 创建习惯弹窗 -->
 		<view v-if="creatingHabit" class="mask">
@@ -81,10 +92,16 @@
 </template>
 
 <script>
+	import { mapState, mapGetters } from 'vuex';
 	export default {
 		name:"TopBar",
 		data() {
 			return {
+				catalogue:[
+					{name:"未完成习惯",icon:"../static/icon/finished.svg"},
+					{name:"已完成习惯",icon:"../static/icon/finished.svg"},
+					{name:"我的习惯",icon:"../static/icon/myHabits.svg"},
+				],
 				menuButton_top:"4vh",
 				menuButton_height:"30px",
 				showCatalogue:false,
@@ -101,10 +118,14 @@
 			};
 		},
 		created() {
+			//获取小程序胶囊按钮的位置和大小，并把菜单和添加习惯按钮设置成与之同高度、同大小
 			let menuButtonInfo = uni.getMenuButtonBoundingClientRect()
 			this.menuButton_top = menuButtonInfo.top+"px"
 			this.menuButton_height = menuButtonInfo.height+"px"
 			console.log(this.menuButton_height)
+		},
+		computed: {
+		    ...mapState(['userInfo']),
 		},
 		methods:{
 			showCata(){
@@ -220,11 +241,36 @@
 		position: fixed;
 		left: 0px;
 		height: 100vh;
-		width: 61.8vw;
-		background-color: #fdfcf9;
+		width: 45vw;
+		background-color: #b6dff1;
 		display: flex;
 		flex-direction: column;
 		align-items: center;
+		border-radius: 0px 20px 20px 0px;
+	}
+	.accountInfo{
+		height: 16.5vh;
+		width: 100%;
+		border-radius: 0px 20px 0px 20px;
+		background-image: linear-gradient(to right,#a4cdeb,#628ebb);
+		
+	}
+	.avatar{
+		margin-top:6vh ;
+		margin-left: 5vw;
+		width: 6vh;
+		height: 6vh;
+		border-radius:3vh;
+		position:absolute
+	}
+	.username{
+		position: absolute;
+		display: flex;
+		flex-direction: column;
+		margin-top:6.5vh ;
+		margin-left: calc(6vh + 7vw);
+		font-size: 2.2vh;
+		color: #36556a;
 	}
 	.mask{
 		position: fixed;
@@ -232,6 +278,24 @@
 		height: 100vh;
 		width: 100vw;
 		background-color: rgba(0,0,0,0.5);
+	}
+	.cata{
+		position: fixed;
+		left: 0;
+		top: 17vh;
+		display: flex;
+		flex-direction: column;
+	}
+	.item{
+		margin-left: 4vw;
+		margin-top: 2vh;
+		display: flex;
+		align-items: center;
+	}
+	.icon{
+		height: 3vh;
+		width: 3vh;
+		margin-right: 2vw;
 	}
 	.catalogueBtn{
 		height: 30px;

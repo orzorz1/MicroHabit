@@ -4,14 +4,14 @@
 		<!-- 头像 -->
 		<view class="avatar">
 			<view class="font_left">头像</view>
-			<image src="../../../../static/logo.png"></image>
+			<image :src="userInfo.avatar"></image>
 		</view>
 		<!-- 账户信息 -->
 		<view class="accInfo">
 			<view class="Info">
 				<view class="font_left">昵称</view>
 				<view @tap="changeUsername" class="btn">
-				<view class="font_right">{{username}}</view>
+				<view class="font_right">{{userInfo.username}}</view>
 				<image src="../../../../static/icon/arrow.png" style="width: 2.2vh;height: 2.2vh;"></image>
 				</view>
 			</view>
@@ -19,7 +19,7 @@
 			<view class="Info">
 				<view class="font_left">性别</view>
 				<view @tap="changeSexual" class="btn">
-				<view class="font_right">{{sexual}}</view>
+				<view class="font_right">{{userInfo.sexual}}</view>
 				<image src="../../../../static/icon/arrow.png" style="width: 2.2vh;height: 2.2vh;"></image>
 				</view>
 			</view>
@@ -27,13 +27,13 @@
 			<view class="Info">
 				<view class="font_left">生日</view>
 				<view @tap="changeBirthday" class="btn">
-				<view class="font_right">{{birthday}}</view>
+				<view class="font_right">{{userInfo.birthday}}</view>
 				<image src="../../../../static/icon/arrow.png" style="width: 2.2vh;height: 2.2vh;"></image>
 				</view>
 			</view>
 		</view>
 		<!-- 绑定账号 -->
-		<view class="id" v-for='account in accounts'>
+		<view class="id" v-for='account in userInfo.accounts'>
 			<view class="font_left">{{account.id_type}}</view>
 			<view class="font_right" style="margin-right: 5vw;">{{account.id}}</view>
 		</view>
@@ -91,15 +91,10 @@
 </template>
 
 <script>
+	import { mapState, mapGetters } from 'vuex';
 	export default {
 		data() {
 			return {
-				//主页面数据
-				username:"别人家的孩子",
-				sexual:"男",
-				birthday:"2000-1-1",
-				accounts:[{'id_type':'邮箱账号','id':'ZhangSan000@gmail.com'},
-						  {'id_type':'微博账号','id':'ZhangSan000'}],
 				// 控制修改页弹出
 				changeusername:false,
 				changesexual:false,
@@ -134,7 +129,9 @@
 				this.DD.push(i)
 			}
 		},
-		
+		computed: {
+		    ...mapState(['userInfo']),
+		},
 		methods: {
 			//调整滚轮,使日期均存在,且不超过当前日期
 			chooseDate(e){

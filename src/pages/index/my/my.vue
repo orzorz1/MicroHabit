@@ -3,9 +3,9 @@
 		<BottomNavigation></BottomNavigation>
 		<view class="home">
 			<view class="user">
-				<image class="avatar" :src="avatar"></image>
-				<view class="username">{{username}}</view>
-				<view class="score">{{score}}</view>
+				<image class="avatar" :src="userInfo.avatar"></image>
+				<view class="username">{{userInfo.username}}</view>
+				<view class="score">{{userInfo.score}}</view>
 			</view>
 			<view class="myCatalogue" v-for="item in items" @tap="goto(item.id)">
 				<view class="textBox">
@@ -19,14 +19,12 @@
 </template>
 
 <script>
+	import { mapState, mapGetters } from 'vuex';
 	import BottomNavigation from '../../../components/BottomNavigation.vue'
 	import TopBar from '../../../components/TopBar.vue';
 	export default {
 		data() {
 			return {
-				avatar:"../../../static/logo.png",
-				username:"1111",
-				score:"LV2 100/200",
 				items:[
 				{"id":0,"icon":"../../../static/icon/target.png","text":"已培养习惯"},
 				{"id":1,"icon":"../../../static/icon/step1.png","text":"习惯排行榜"},
@@ -35,6 +33,9 @@
 				]
 				
 			}
+		},
+		computed: {
+		    ...mapState(['userInfo']),
 		},
 		methods: {
 			goto(to){

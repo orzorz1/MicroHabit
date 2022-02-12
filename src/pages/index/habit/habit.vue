@@ -15,6 +15,7 @@
 						<image class="tick" src="../../../static/icon/dui.png" v-if="habit.showTick"></image>
 					</view>
 				</view>
+				<view v-if="habits.length===0">全部习惯已完成</view>
 			</view>
 		</view>	
 	</view>
@@ -36,27 +37,33 @@
 					{"id":"0000010003","name":"阅读","content":"看10页书","showTick":false},
 					{"id":"0000010004","name":"写作","content":"写100字","showTick":false},
 				],
+				disabled:false
 			}
 		},
 		methods: {
 			finishHabit(index){
 				//完成习惯不显示
-				// let that=this
-				// this.habits[index].showTick=true
-				// setTimeout(function(){
-				// 	that.habits.splice(index, 1);
-				// },1000)
-				
-				//完成放最后
-				if(this.habits[index].showTick!=true){
-					this.habits[index].showTick=true
+				if(this.disabled!=true){
 					let that=this
+					this.habits[index].showTick=true
+					this.disabled=true
 					setTimeout(function(){
-						let temp = that.habits[index]
 						that.habits.splice(index, 1);
-						that.habits.push(temp)
-					},500)
+						that.disabled=false
+					},1000)	
 				}
+				//完成放最后
+				// if(this.habits[index].showTick!=true && this.disabled!=true){
+				// 	this.habits[index].showTick=true
+				// 	let that=this
+				// this.disabled=true
+				// 	setTimeout(function(){
+				// 		let temp = that.habits[index]
+				// 		that.habits.splice(index, 1);
+				// 		that.habits.push(temp)
+				// 		that.disabled=false
+				// 	},500)
+				// }
 			}
 		},
 		components:{
