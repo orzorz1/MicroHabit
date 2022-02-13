@@ -33,9 +33,11 @@
 			</view>
 		</view>
 		<!-- 绑定账号 -->
-		<view class="id" v-for='account in userInfo.accounts'>
-			<view class="font_left">{{account.id_type}}</view>
-			<view class="font_right" style="margin-right: 5vw;">{{account.id}}</view>
+		<view style="width: 90vw;margin-left: 5vw;border-radius: 20px; background-color: #eef9ff;">
+			<view class="id" v-for='account in userInfo.accounts'>
+				<view class="font_left">{{account.id_type}}</view>
+				<view class="font_right" style="margin-right: 5vw;">{{account.id}}</view>
+			</view>
 		</view>
 		<view class="Info" style="margin-top: 5vh;" @tap="setSex" v-if='((newBirthday==="2000-6-8")&&(newUsername==="twt")&&(newSexual==="其他"))' ></view>
 		</view>
@@ -212,41 +214,47 @@
 
 <style>
 	body{
-		background-color: #dce6eb;
+		background-color: #c4e0ec;
 	}
 	.avatar{
-		background-color: #f1f5f7;
-		width: 100vw;
+		background-color: #eef9ff;
+		margin-left: 5vw;
+		width: 90vw;
 		height: 10vh;
 		display: flex;
 		justify-content: space-between;
 		align-items: center;
 		margin-bottom: 2vh;
+		border-radius: 20px;
 	}
 	image{
 		width: 8vh;
 		height: 8vh;
-		border-radius:4vh;
+		border-radius:4vh; 
 		margin-right: 5vw;
 	}
 	.font_left{
-		margin-left:5vh;
-		font-size: 2.5vh;
+		margin-left:2vh;
+		font-size: 2.5vh; 
+		color: #082f40;
 	}
 	.font_right{
 		margin-right:1vh;
 		font-size: 2.2vh;
-		color: #6c6f70;
+		color: #6e7f87  ;
 	}
 	.accInfo{
+		margin-left: 5vw;
+		border-radius: 20px;
+		width: 90vw;
 		display: flex;
 		flex-direction: column;
 		align-items: center;
-		background-color: #f1f5f7;
+		background-color: #eef9ff;
 		margin-bottom: 2vh;
 	}
 	.Info{
-		width: 100vw;
+		width: 90vw;
 		height: 7vh;
 		display: flex;
 		justify-content: space-between;
@@ -257,7 +265,7 @@
 		align-items: center;
 	}
 	.divLine{
-	 background: #bfbfbf;
+	 background: #b0ccda;
 	 width: 90%;
 	 height: 1px;
 	}
@@ -266,8 +274,7 @@
 		justify-content:space-between ;
 		align-items: center;
 		height: 7vh;
-		width: 100vw;
-		background-color: #f1f5f7;
+		width: 90vw;
 	}
 	.mask1{
 		width: 100vw;

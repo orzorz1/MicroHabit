@@ -40,6 +40,7 @@
 		methods: {
 			goto(to){
 				if(to===0){
+					uni.navigateTo({url:'/pages/index/catalogue/finishedHabit/finishedHabit'})
 				}
 				else if(to===1){
 					uni.navigateTo({url:'/pages/index/catalogue/list/list'})

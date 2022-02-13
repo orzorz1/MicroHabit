@@ -80,7 +80,7 @@
 
 <style>
 	body{
-		background-color: #dce6eb;
+		background-color: #c4e0ec;
 	}
 	.switchList{
 		height:6vh;
@@ -88,7 +88,7 @@
 		display: flex;
 		justify-content: space-around;
 		align-items: center;
-		background-color: #f1f5f7;
+		background-color: #eef9ff;
 		margin-bottom: 3vw;
 	}
 	.lists{
@@ -118,7 +118,7 @@
 	.listInfo{
 		width: 100vw;
 		height: 7vh;
-		background-color: #f1f5f7;
+		background-color: #eef9ff;
 		display: flex;
 	}
 	.divLine1{

@@ -43,27 +43,27 @@
 		methods: {
 			finishHabit(index){
 				//完成习惯不显示
-				if(this.disabled!=true){
-					let that=this
-					this.habits[index].showTick=true
-					this.disabled=true
-					setTimeout(function(){
-						that.habits.splice(index, 1);
-						that.disabled=false
-					},1000)	
-				}
-				//完成放最后
-				// if(this.habits[index].showTick!=true && this.disabled!=true){
-				// 	this.habits[index].showTick=true
+				// if(this.disabled!=true){
 				// 	let that=this
-				// this.disabled=true
+				// 	this.habits[index].showTick=true
+				// 	this.disabled=true
 				// 	setTimeout(function(){
-				// 		let temp = that.habits[index]
 				// 		that.habits.splice(index, 1);
-				// 		that.habits.push(temp)
 				// 		that.disabled=false
-				// 	},500)
+				// 	},1000)	
 				// }
+				//完成放最后
+				if(this.habits[index].showTick!=true && this.disabled!=true){
+					this.habits[index].showTick=true
+					let that=this
+				this.disabled=true
+					setTimeout(function(){
+						let temp = that.habits[index]
+						that.habits.splice(index, 1);
+						that.habits.push(temp)
+						that.disabled=false
+					},500)
+				}
 			}
 		},
 		components:{

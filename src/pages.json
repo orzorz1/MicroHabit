@@ -40,7 +40,7 @@
 		    {
 		        "navigationBarTitleText": "账号设置",
 		        "enablePullDownRefresh": false,
-				"navigationBarBackgroundColor":"#dce6eb"//标题栏颜色
+				"navigationBarBackgroundColor":"#c4e0ec"//标题栏颜色
 		    }
 		    
 		},
@@ -51,7 +51,7 @@
 			{
 				"navigationBarTitleText": "排行榜",
 				"enablePullDownRefresh": false,
-				"navigationBarBackgroundColor":"#dce6eb"
+				"navigationBarBackgroundColor":"#c4e0ec"
 			}
 		},
         {
