@@ -2,8 +2,8 @@
 	<view>
 		<!-- 顶部栏 -->
 		<view class="topBar" :style="{top:menuButton_top,height:menuButton_height}">
-			<image class="catalogueBtn" src="../static/icon/catalogue.png" @tap="showCata()"></image>
-			<image class="plusBtn" src="../static/icon/plus.png" @tap="createHabit"></image>			
+<!-- 			<image class="catalogueBtn" src="../static/icon/catalogue.png" @tap="showCata()"></image>
+ -->			<image class="plusBtn" src="../static/icon/plus.png" @tap="createHabit"></image>			
 		</view>
 		<!-- 侧边栏菜单 -->
 		<view v-if="showCatalogue" @tap="closeCata" class="mask">
