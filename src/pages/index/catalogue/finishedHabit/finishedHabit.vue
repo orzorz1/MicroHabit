@@ -13,7 +13,11 @@
 				<view class="progress">
 					<view class="progressBar" :style="{ 'width':daysWidth + 'px'}"></view>
 					<view class="finishedBar" :style="{'width':daysWidth * habit.days / 100 + 'px'}"></view>
-					<view class="days" @click="qq">{{habit.days}}/100</view>
+					<view class="days" >{{habit.days}}/100</view>
+				</view>
+				<view class="date" :style="{ 'width':daysWidth + 'px'}">
+					<view>{{habit.beginDate}}</view>
+					<view>{{habit.finishDate}}</view>
 				</view>
 			</view>
 		</view>
@@ -54,7 +58,6 @@
 			obj.exec(function (rect) {
 				that.daysWidth = wx.getSystemInfoSync().windowWidth*0.78-rect[0][0].width
 			}) ;
-			
 		},
 		methods: {
 		}
@@ -89,6 +92,7 @@
 		margin-top: 1vh;
 		height: 4vh;
 		font-size: 2.5vh;
+		color: #1b405b;
 	}
 	.horizontalLine{
 		height: 2px;
@@ -120,15 +124,14 @@
 		 margin-top: 1.5vh;
 	}
 	.progress{
-		height: 5vh;
+		height: 2vh;
 		width: 80vw;
 	}
 	.progressBar{
 		position: absolute;
 		height: 1vh;
 		border-radius: 0.5vh;
-/* 		width: 60vw;
- */		background-color: #fbfa9d;
+		background-color: #fbfa9d;
 		margin-top: 1vh;
 	}
 	.finishedBar{
@@ -143,5 +146,16 @@
 		right: 10vw;
 		font-size: 2.5vh;
 		transform: translate(0,-0.9vh);
+	}
+	.date{
+		display: flex;
+		justify-content: space-between;
+		align-self: flex-start;
+		text-align:left; 
+		margin-left: 5vw;
+		margin-top: 0.5vh;
+		font-size: 1.4vh;
+		color:#527185 ;
+		margin-bottom: 1vh;
 	}
 </style>

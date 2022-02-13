@@ -122,7 +122,6 @@
 			let menuButtonInfo = uni.getMenuButtonBoundingClientRect()
 			this.menuButton_top = menuButtonInfo.top+"px"
 			this.menuButton_height = menuButtonInfo.height+"px"
-			console.log(this.menuButton_height)
 		},
 		computed: {
 		    ...mapState(['userInfo']),

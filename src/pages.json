@@ -73,6 +73,17 @@
             }
             
         }
+        ,{
+            "path" : "pages/index/habitInfo/habitInfo",
+            "style" :                                                                                    
+            {
+                "navigationBarTitleText": "习惯详情",
+                "enablePullDownRefresh": false,
+				"navigationBarBackgroundColor":"#416f92",
+				"navigationBarTextStyle": "white"
+            }
+            
+        }
     ],
 	"globalStyle": {
 		"navigationBarTextStyle": "black",

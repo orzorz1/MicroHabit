@@ -5,7 +5,7 @@
 		<view id="habit">
 			<view class="main">
 				<view v-for="(habit,index) in habits" class="habits" :style="{background:(habit.showTick===true)?'#b8b6b4':((index%2)===0)?'#ddeff8':'#fcf5c9'}">
-					<view class="habitContent">
+					<view class="habitContent"  @tap="toHabitInfo(index)">
 						<view>
 						<view style="width: 60vw;text-align:left;font-size:2.5vh;">{{habit.name}}</view>
 						<view style="width: 60vw;text-align:left;font-size:2vh;">{{habit.content}}</view>
@@ -64,6 +64,9 @@
 						that.disabled=false
 					},500)
 				}
+			},
+			toHabitInfo(index){
+				uni.navigateTo({url:'/pages/index/habitInfo/habitInfo'})
 			}
 		},
 		components:{

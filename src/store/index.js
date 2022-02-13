@@ -13,8 +13,29 @@ const store = new Vuex.Store({
 			accounts:[{'id_type':'邮箱账号','id':'ZhangSan@gmail.com'},
 					  {'id_type':'微博账号','id':'ZhangSan'}],
 		},
+		currentHabit:{
+			name:"英语微习惯",
+			steps:[
+				{"begin":1,"end":50,"content":"背3个单词"},
+				{"begin":51,"end":70,"content":"背5个单词"},
+				{"begin":71,"end":100,"content":"背7个单词"},
+			],
+			beginDate:"2022/01/01",
+			finishDate:"2022/01/31",
+			days:64,
+		},
+		editingHabit:false,
 	},
-    mutations: {},
-    actions: {}
+    mutations: {
+		editing(){
+			this.state.editingHabit = !this.state.editingHabit
+		},
+		edit(state,obj){
+			this.state.currentHabit = obj
+		}
+	},
+    actions: {
+
+	}
 })
 export default store
