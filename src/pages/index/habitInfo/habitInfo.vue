@@ -4,7 +4,7 @@
 		<editHabit ref="edit"></editHabit>
 		<view class="steps">
 			<view class="step" v-for="(step,index) in currentHabit.steps">
-				<view style="display: flex;">
+				<view style="display: flex; align-items: center;">
 					<view class="order">{{numbers[index]}}</view>
 					<view class="stepContent">
 						<view class="contents">{{step.content}}</view>
@@ -120,7 +120,6 @@
 	}
 	.order{
 		font-size: 3.5vh;
-		margin-top: 0.5vh;
 		margin-left: 5vw;
 		margin-right: 5vw;
 		color: #1a3f5c;
@@ -130,7 +129,7 @@
 		flex-direction: column;
 	}
 	.contents{
-		height: 3vh;
+		width: 35vw;
 		font-size: 2.4vh;
 		color: #1a3f5c;
 	}

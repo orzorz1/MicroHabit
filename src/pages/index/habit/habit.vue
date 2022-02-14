@@ -7,8 +7,8 @@
 				<view v-for="(habit,index) in habits" class="habits" :style="{background:(habit.showTick===true)?'#b8b6b4':((index%2)===0)?'#ddeff8':'#fcf5c9'}">
 					<view class="habitContent"  @tap="toHabitInfo(index)">
 						<view>
-						<view style="width: 60vw;text-align:left;font-size:2.5vh;">{{habit.name}}</view>
-						<view style="width: 60vw;text-align:left;font-size:2vh;">{{habit.content}}</view>
+						<view style="width: 65vw;text-align:left;font-size:2.5vh;">{{habit.name}}</view>
+						<view style="width: 65vw;text-align:left;font-size:2vh;">{{habit.content}}</view>
 						</view>
 					</view>
 					<view class="tick" @tap="finishHabit(index)">
@@ -32,10 +32,8 @@
 					{"id":"0000010002","name":"健身","content":"做10个卷腹","showTick":false},
 					{"id":"0000010003","name":"阅读","content":"看10页书","showTick":false},
 					{"id":"0000010004","name":"写作","content":"写100字","showTick":false},
-					{"id":"0000010001","name":"英语","content":"背35个单词","showTick":false},
+					{"id":"0000010001","name":"啊啊啊啊啊啊啊啊啊啊啊","content":"十四字十四字滋滋滋滋滋滋滋滋","showTick":false},
 					{"id":"0000010002","name":"健身","content":"做10个卷腹","showTick":false},
-					{"id":"0000010003","name":"阅读","content":"看10页书","showTick":false},
-					{"id":"0000010004","name":"写作","content":"写100字","showTick":false},
 				],
 				disabled:false
 			}

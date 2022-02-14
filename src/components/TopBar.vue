@@ -42,7 +42,7 @@
 					<view style="width: 10vw; margin-top:2.5vh ;">习惯</view>
 					<view style="width: 10vw;">名称</view>
 				</view>
-				<input class="input_habit"  v-model="habitName"  :disabled='disableInput' />
+				<input class="input_habit"  v-model="habitName" maxlength="10" :disabled='disableInput' />
 			</view>
 			<!-- 习惯每阶段的内容 -->
 			<view v-for="(step,index) in steps">
@@ -52,7 +52,7 @@
 						<view style="color: #bfbfbf; font-size: 1.5vh;">阶段</view>
 					</view>
 					<view class="contentAndTime">
-							<input class="input_stepContent" placeholder="完成内容" v-model="steps[index].content" :disabled='disableInput' />
+							<input class="input_stepContent" placeholder="完成内容" maxlength="14" v-model="steps[index].content" :disabled='disableInput' />
 							<view class="divLine2"></view>
 							<view class="stepTime">
 								<view>阶段天数</view>
@@ -220,6 +220,9 @@
 </script>
 
 <style>
+	input{
+		height: 2.8vh;
+	}
 	.habitName{
 		font-size: 2.2vh; 
 		height: 50px;
@@ -229,6 +232,7 @@
 		flex: 1
 	}
 	.input_habit{
+		font-size: 2.5vh;
 		width: 100vw; 
 		border-bottom: 1px solid #bfbfbf;
 		margin-right:5vw ;
