@@ -98,6 +98,7 @@
 <style>
 	body{
 		background-color: #91bfd7;
+		overflow:hidden
 	}
 	.steps{
 		position: fixed;
@@ -112,7 +113,7 @@
 		align-items: center;
 		justify-content: space-between;
 		border-radius: 20px;
-		margin-bottom: 3vh;
+		margin-bottom: 2vh;
 		height: 10vh;
 		width: 90vw;
 		background-color: #d2f3fc;

@@ -31,9 +31,9 @@
 						<view class="contentAndTime">
 								<input class="input_stepContent" placeholder="完成内容" v-model="Info.steps[index].content" :disabled='disableInput' />
 								<view class="divLine2"></view>
-								<view class="stepTime" @tap="chooseStepTime(index)">
+								<view class="stepTime">
 									<view>阶段天数</view>
-									<text decode style="margin-left: 5vw; border-bottom: 1px solid #bfbfbf;">第&emsp;{{step.begin}}&emsp;~&emsp;{{step.end}}&emsp;天</text>
+									<text decode style="margin-left: 5vw; border-bottom: 1px solid #bfbfbf;" @tap="chooseStepTime(index)">第&emsp;{{step.begin}}&emsp;~&emsp;{{step.end}}&emsp;天</text>
 								</view>
 						</view>
 					</view>
@@ -59,8 +59,11 @@
 						</picker-view>
 					</view>
 				</view>
-				<!-- 添加阶段按钮 -->
-				<image src="../static/icon/plus1.png" class="addStep" @tap="addStep" v-if="(Info.steps.length<5)&&Info.steps[Info.steps.length-1].end!=100"></image>
+				<!-- 添加、删除阶段按钮 -->
+				<view class="button">
+					<image src="../static/icon/删除.svg" class="addStep" @tap="deleteStep" v-if="Info.steps.length!=1"></image>
+					<image src="../static/icon/添加.svg" class="addStep" @tap="addStep" v-if="(Info.steps.length<5)&&Info.steps[Info.steps.length-1].end!=100"></image>
+				</view>
 			</view>
 		</view>
 	</view>
@@ -113,24 +116,29 @@
 				this.Info.steps[this.Info.steps.length-1].begin=this.Info.steps[this.Info.steps.length-2].end+1
 				this.Info.steps[this.Info.steps.length-1].end=this.Info.steps[this.Info.steps.length-1].begin
 			},
+			deleteStep(){
+				this.Info.steps.pop()
+			},
 			closePicker(index){
 				this.Info.steps[index].show=false	
 				this.disableInput=false
 			},
 			chooseStepTime(index){
-				this.disableInput=true
-				this.Info.steps[index].show=true
-				this.end=this.Info.steps[index].begin
-				if(index===0){
-					this.Info.steps[index].begin=1
-				}
-				else{
-					this.Info.steps[index].begin=this.Info.steps[index-1].end+1
-				}
-				this.begin=this.Info.steps[index].begin
-				this.beginToEnd=[]
-				for(let i=this.Info.steps[index].begin;i<=100;i++){
-					this.beginToEnd.push(i)
+				if(this.disableInput===false){
+					this.disableInput=true
+					this.Info.steps[index].show=true
+					this.end=this.Info.steps[index].begin
+					if(index===0){
+						this.Info.steps[index].begin=1
+					}
+					else{
+						this.Info.steps[index].begin=this.Info.steps[index-1].end+1
+					}
+					this.begin=this.Info.steps[index].begin
+					this.beginToEnd=[]
+					for(let i=this.Info.steps[index].begin;i<=100;i++){
+						this.beginToEnd.push(i)
+					}
 				}
 			},
 			chooseTime(e){
@@ -253,7 +261,7 @@
 		width: 5vh;
 		height: 5vh;
 		text-align: center;
-		margin: 2vh 0 4vh calc(50vw - 2.5vh);
+		margin-right: 3vw;
 	}
 
 	.top{
@@ -285,7 +293,11 @@
 	.timePicker{
 		margin-top: 1vh;
 		height: 15vh;
-		width: 70vw;
-		
+		width: 70vw;		
+	}
+	.button{
+		display: flex;
+		flex-direction: row-reverse;
+		padding-right: 2vw;
 	}
 </style>

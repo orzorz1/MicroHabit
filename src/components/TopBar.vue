@@ -2,7 +2,7 @@
 	<view>
 		<!-- 顶部栏 -->
 		<view class="topBar" :style="{top:menuButton_top,height:menuButton_height}">
-<!-- 			<image class="catalogueBtn" src="../static/icon/catalogue.png" @tap="showCata()"></image>
+<!-- 			<image class="catalogueBtn" src="../static/icon/catalogue.png" @tap="showCata()"></image>   暂时关闭了侧边菜单功能
  -->			<image class="plusBtn" src="../static/icon/plus.png" @tap="createHabit"></image>			
 		</view>
 		<!-- 侧边栏菜单 -->
@@ -54,9 +54,9 @@
 					<view class="contentAndTime">
 							<input class="input_stepContent" placeholder="完成内容" v-model="steps[index].content" :disabled='disableInput' />
 							<view class="divLine2"></view>
-							<view class="stepTime" @tap="chooseStepTime(index)">
+							<view class="stepTime">
 								<view>阶段天数</view>
-								<text decode style="margin-left: 5vw; border-bottom: 1px solid #bfbfbf;">第&emsp;{{step.begin}}&emsp;~&emsp;{{step.end}}&emsp;天</text>
+								<text decode style="margin-left: 5vw; border-bottom: 1px solid #bfbfbf;" @tap="chooseStepTime(index)">第&emsp;{{step.begin}}&emsp;~&emsp;{{step.end}}&emsp;天</text>
 							</view>
 					</view>
 				</view>
@@ -82,8 +82,11 @@
 					</picker-view>
 				</view>
 			</view>
-			<!-- 添加阶段按钮 -->
-			<image src="../static/icon/plus1.png" class="addStep" @tap="addStep" v-if="(steps.length<5)&&steps[steps.length-1].end!=100"></image>
+			<!-- 添加、删除阶段按钮 -->
+			<view class="button">
+				<image src="../static/icon/删除.svg" class="addStep" @tap="deleteStep" v-if="steps.length!=1"></image>
+				<image src="../static/icon/添加.svg" class="addStep" @tap="addStep" v-if="(steps.length<5)&&steps[steps.length-1].end!=100"></image>
+			</view>
 			</view>
 		</view>
 
@@ -146,24 +149,29 @@
 				this.steps[this.steps.length-1].begin=this.steps[this.steps.length-2].end+1
 				this.steps[this.steps.length-1].end=this.steps[this.steps.length-1].begin
 			},
+			deleteStep(){
+				this.steps.pop()
+			},
 			closePicker(index){
 				this.steps[index].show=false	
 				this.disableInput=false
 			},
 			chooseStepTime(index){
-				this.disableInput=true
-				this.steps[index].show=true
-				this.end=this.steps[index].begin
-				if(index===0){
-					this.steps[index].begin=1
-				}
-				else{
-					this.steps[index].begin=this.steps[index-1].end+1
-				}
-				this.begin=this.steps[index].begin
-				this.beginToEnd=[]
-				for(let i=this.steps[index].begin;i<=100;i++){
-					this.beginToEnd.push(i)
+				if(this.disableInput===false){
+					this.disableInput=true
+					this.steps[index].show=true
+					this.end=this.steps[index].begin
+					if(index===0){
+						this.steps[index].begin=1
+					}
+					else{
+						this.steps[index].begin=this.steps[index-1].end+1
+					}
+					this.begin=this.steps[index].begin
+					this.beginToEnd=[]
+					for(let i=this.steps[index].begin;i<=100;i++){
+						this.beginToEnd.push(i)
+					}
 				}
 			},
 			chooseTime(e){
@@ -366,11 +374,12 @@
 		font-size: 2.2vh;
 		margin-top: 1vh;
 	}
+
 	.addStep{
 		width: 5vh;
 		height: 5vh;
 		text-align: center;
-		margin: 2vh 0 4vh calc(50vw - 2.5vh);
+		margin-right: 3vw;
 	}
 
 	.top{
@@ -405,5 +414,9 @@
 		width: 70vw;
 		
 	}
-
+	.button{
+		display: flex;
+		flex-direction: row-reverse;
+		padding-right: 2vw;
+	}
 </style>
