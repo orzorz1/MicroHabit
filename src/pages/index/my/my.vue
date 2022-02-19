@@ -3,9 +3,9 @@
 		<BottomNavigation></BottomNavigation>
 		<view class="home">
 			<view class="user">
-				<image class="avatar" :src="userInfo.avatar"></image>
+				<image class="avatar" :src="userInfo.avatar" @tap="login"></image>
 				<view class="username">{{userInfo.username}}</view>
-				<view class="score">{{userInfo.score}}</view>
+				<view class="score">xp:{{userInfo.score}}</view>
 			</view>
 			<view class="myCatalogue" v-for="item in items" @tap="goto(item.id)">
 				<view class="textBox">
@@ -35,12 +35,25 @@
 			}
 		},
 		computed: {
-		    ...mapState(['userInfo']),
+		    ...mapState(['userInfo','hasLogin']),
 		},
 		methods: {
+			login(){
+				if(this.hasLogin===false){
+					uni.navigateTo({url:'/pages/index/login/login'})
+				}
+			},
 			goto(to){
 				if(to===0){
+					if(this.hasLogin===false){
+						uni.showToast({
+							title: '请先登录',
+							icon:'none',
+							duration: 2000
+						});
+					}else{
 					uni.navigateTo({url:'/pages/index/catalogue/finishedHabit/finishedHabit'})
+					}
 				}
 				else if(to===1){
 					uni.navigateTo({url:'/pages/index/catalogue/list/list'})
@@ -50,7 +63,15 @@
 					
 				}
 				else if(to===3){
+					if(this.hasLogin===false){
+						uni.showToast({
+							title: '请先登录',
+							icon:'none',
+							duration: 2000
+						});
+					}else{
 					uni.navigateTo({url:'/pages/index/catalogue/accountSet/accountSet'})
+					}
 				}
 			}
 			

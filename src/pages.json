@@ -63,7 +63,24 @@
                 "enablePullDownRefresh": false
             }    
         }
-        ,{
+        ,
+		{
+		    "path" : "pages/index/login/login",
+		    "style" :                                                                                    
+		    {
+		        "navigationBarTitleText": "登录",
+		        "enablePullDownRefresh": false
+		    }    
+		},
+		{
+		    "path" : "pages/index/regist/regist",
+		    "style" :                                                                                    
+		    {
+		        "navigationBarTitleText": "注册",
+		        "enablePullDownRefresh": false
+		    }    
+		},
+		{
             "path" : "pages/index/catalogue/finishedHabit/finishedHabit",
             "style" :                                                                                    
             {

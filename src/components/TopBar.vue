@@ -127,7 +127,7 @@
 			this.menuButton_height = menuButtonInfo.height+"px"
 		},
 		computed: {
-		    ...mapState(['userInfo']),
+		    ...mapState(['userInfo','hasLogin']),
 		},
 		methods:{
 			showCata(){
@@ -137,8 +137,16 @@
 				this.showCatalogue=false
 			},
 			createHabit(){
+				if(this.hasLogin===false){
+					uni.showToast({
+						title: '请先登录',
+						icon:'none',
+						duration: 2000
+					});
+				}else{
 				this.creatingHabit=true
 				this.steps=[{"content":"","begin":1,"end":5,"show":false}]
+				}
 			},
 			closeCreate(){
 				this.creatingHabit=false
