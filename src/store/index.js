@@ -6,12 +6,14 @@ const store = new Vuex.Store({
 		hasLogin:false,
 		userInfo:{
 			username:"点击登录",
-			avatar:"https://s2.loli.net/2022/02/12/F3KIfEVMzBaGti1.jpg",
+			avatar:"../../../static/icon/未登录.svg",
 			birthday:"2000-1-1",
 			sexual:"男",
 			score:"0",
-			accounts:[{'id_type':'邮箱账号','id':'ZhangSan@gmail.com'},
-					  {'id_type':'微博账号','id':'ZhangSan'}],
+			accounts:[
+						// {'id_type':'邮箱账号','id':'ZhangSan@gmail.com'},
+						// {'id_type':'微博账号','id':'ZhangSan'},
+					],
 		},
 		currentHabit:{
 			name:"英语微习惯",
@@ -41,6 +43,18 @@ const store = new Vuex.Store({
 		},
 		login(){
 			this.state.hasLogin = !this.state.hasLogin
+		},
+		avatar(state,obj){
+			this.state.userInfo.avatar = obj
+		},
+		userInfo(state,obj){
+			this.state.userInfo = obj
+		},
+		sexual(state,obj){
+			this.state.userInfo.sexual = obj
+		},
+		birthday(state,obj){
+			this.state.userInfo.birthday = obj
 		}
 	},
     actions: {

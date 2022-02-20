@@ -47,46 +47,54 @@
 			formSubmit() {
 				let that = this
 				let un = this.username
-				wx.request({
-					url: 'http://49.232.25.86:1926/users/login?user_name='+this.username+'&&user_password='+this.password, 
-					header: {
-						'Content-Type': 'application/json'
-					},				
-					success: function(res) {
-						if(res.data.code===0){
-							uni.showToast({
-								title: '登录成功',
-								icon:'none',
-								duration: 2000
-							});
-							that.$store.commit('username',un)
-							that.$store.commit('login')
-							wx.request({
-								url: 'http://49.232.25.86:1926/users/basc_msg?user_name='+un, 
-								header: {
-									'Content-Type': 'application/json'
-								},				
-								success: function(res) {
-									console.log(res)
-									if(res.data.code===0){
-										that.$store.commit('score',res.data.xp)
+				if(this.username===''||this.password===''){
+					uni.showToast({
+						title: '请输入用户名和密码',
+						icon:'none',
+						duration: 2000
+					});
+				}
+				else{
+					wx.request({
+						url: 'http://49.232.25.86:1926/users/login?user_name='+this.username+'&&user_password='+this.password, 
+						header: {
+							'Content-Type': 'application/json'
+						},				
+						success: function(res) {
+							if(res.data.code===0){
+								uni.showToast({
+									title: '登录成功',
+									icon:'none',
+									duration: 2000
+								});
+								that.$store.commit('username',un)
+								that.$store.commit('login')
+								that.$store.commit('avatar',"https://s2.loli.net/2022/02/12/F3KIfEVMzBaGti1.jpg")
+								wx.request({
+									url: 'http://49.232.25.86:1926/users/basc_msg?user_name='+un, 
+									header: {
+										'Content-Type': 'application/json'
+									},				
+									success: function(res) {
+										console.log(res)
+										if(res.data.code===0){
+											that.$store.commit('score',res.data.xp)
+										}
 									}
-								}
-							})
-							setTimeout(function(){
-								wx.navigateBack({ changed: true })
-							},2000)
-						}else{
-							setTimeout(function(){
+								})
+								setTimeout(function(){
+									wx.navigateBack({ changed: true })
+								},2000)
+							}else{
 								uni.showToast({
 									title: '用户名或密码错误',
 									icon:'none',
 									duration: 2000
 								});
-							},2000)
+							}
 						}
-					}
-				})
+					})
+				}
 			},
 			goRegist(){
 				uni.navigateTo({url:'/pages/index/regist/regist'})

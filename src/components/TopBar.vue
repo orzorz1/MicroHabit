@@ -150,7 +150,6 @@
 			},
 			closeCreate(){
 				this.creatingHabit=false
-				console.log(1)
 			},
 			addStep(){
 				this.steps.push({"content":"","begin":0,"end":0,"show":false})
@@ -212,6 +211,15 @@
 				}				
 			},
 			addHabit(){
+				let that = this
+				let states = []
+				for(let i=0;i<this.steps.length;i++){
+					let dic = {}
+					dic.content = this.steps[i].content
+					dic.start_day = this.steps[i].begin
+					dic.end_day = this.steps[i].end
+					states.push(dic)
+				}
 				if(this.steps[this.steps.length-1].end!=100){
 					uni.showToast({
 						title: '请将最后一个阶段的结束天数设置为100',
@@ -219,10 +227,66 @@
 						duration: 2000
 					});
 				}else{
-					this.closeCreate()
-					console.log(this.steps)
+					//创建习惯
+					wx.request({
+						url: 'http://49.232.25.86:1926/habits/create?user_name='+this.userInfo.username+'&&habit_name='+this.habitName+'&&start_date=0000-00-00',
+						header: {
+							'Content-Type': 'application/json'
+						},
+						success: function(res) {
+							if(res.data.code===0){
+								let id = res.data.habit_id
+								//创建阶段
+								wx.request({ 
+									url: "http://49.232.25.86:1926/state/create", 
+									header: { 
+										"Content-Type": "application/json;charset=UTF-8",
+										
+									}, 
+									method: "POST", 
+									// data: that.json2Form( { habit_id: id, states: states }), 
+									data:JSON.stringify({
+									      "habit_id": id,
+									      "states": states,
+									      }),
+									complete: function( res ) { 
+										console.log(res)
+										if(res.data.code===0){
+											uni.showToast({
+												title: '创建成功',
+												icon:'none',
+												duration: 2000
+											});
+											that.closeCreate()
+										}else{ 
+											// 如果创建阶段失败删除该习惯
+											wx.request({
+												url: 'http://49.232.25.86:1926//habits/delete?habit_id='+id,
+												header: {
+													'Content-Type': 'application/json'
+												},				
+												success: function(res) {
+												}
+											})
+											uni.showToast({
+												title: '创建失败，请稍后再试',
+												icon:'none',
+												duration: 2000
+											});
+										} 
+									} 
+								}) 
+							}else{
+								uni.showToast({
+									title: '创建失败，请稍后再试',
+									icon:'none',
+									duration: 2000
+								});
+							}
+						}
+					})
 				}
-			}
+			},
 		}
 	}
 </script>

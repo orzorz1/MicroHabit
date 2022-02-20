@@ -41,32 +41,39 @@
 				this.hideEyes = !this.hideEyes;
 			},
 			formSubmit() {
-				wx.request({
-					url: 'http://49.232.25.86:1926/users/register?user_name='+this.username+'&&user_password='+this.password, //这里填写你的接口路径
-					header: {
-						'Content-Type': 'application/json'
-					},				
-					success: function(res) {
-						if(res.data.code===0){
-							uni.showToast({
-								title: '注册成功',
-								icon:'none',
-								duration: 2000
-							});
-							setTimeout(function(){
-								wx.navigateBack({ changed: true })
-							},2000)
-						}else{
-							setTimeout(function(){
+				if(this.username===''||this.password===''){
+					uni.showToast({
+						title: '请输入用户名和密码',
+						icon:'none',
+						duration: 2000
+					});
+				}
+				else{
+					wx.request({
+						url: 'http://49.232.25.86:1926/users/register?user_name='+this.username+'&&user_password='+this.password, //这里填写你的接口路径
+						header: {
+							'Content-Type': 'application/json'
+						},				
+						success: function(res) {
+							if(res.data.code===0){
+								uni.showToast({
+									title: '注册成功',
+									icon:'none',
+									duration: 2000
+								});
+								setTimeout(function(){
+									wx.navigateBack({ changed: true })
+								},2000)
+							}else{
 								uni.showToast({
 									title: '用户名已存在',
 									icon:'none',
 									duration: 2000
 								});
-							},2000)
+							}
 						}
-					}
-				})
+					})
+				}
 			},
 		}
 	}

@@ -15,28 +15,50 @@
 						<image class="tick" src="../../../static/icon/dui.png" v-if="habit.showTick"></image>
 					</view>
 				</view>
-				<view v-if="habits.length===0">全部习惯已完成</view>
+				<view v-if="habits.length===0" style="width: 100vw;text-align: center;">暂无习惯</view>
 			</view>
 		</view>	
 	</view>
 </template>
 
 <script>
+	import { mapState, mapGetters } from 'vuex';
 	import BottomNavigation from '../../../components/BottomNavigation.vue';
 	import TopBar from '../../../components/TopBar.vue';
 	export default {
 		data() {
 			return {
 				habits:[
-					{"id":"0000010001","name":"英语","content":"背35个单词","showTick":false},
-					{"id":"0000010002","name":"健身","content":"做10个卷腹","showTick":false},
-					{"id":"0000010003","name":"阅读","content":"看10页书","showTick":false},
-					{"id":"0000010004","name":"写作","content":"写100字","showTick":false},
-					{"id":"0000010001","name":"啊啊啊啊啊啊啊啊啊啊啊","content":"十四字十四字滋滋滋滋滋滋滋滋","showTick":false},
-					{"id":"0000010002","name":"健身","content":"做10个卷腹","showTick":false},
 				],
 				disabled:false
 			}
+		},
+		onLoad(){
+			let that = this
+			wx.request({
+				url: 'http://49.232.25.86:1926/habits/select/training?user_name='+this.userInfo.username,
+				header: {
+					'Content-Type': 'application/json'
+				},				
+				success: function(res) {
+					if(res.data.code===0){
+						let habits = []
+						console.log(res)
+						for(let i=0;i<res.data.habits.length;i++){
+							let habit = {}
+							habit.id = res.data.habits[i].id
+							habit.name = res.data.habits[i].name
+							habit.content = res.data.habits[i].content
+							habit.showTick = false
+							habits.push(habit)
+						}
+						that.habits = habits
+					}
+				}
+			})
+		},
+		computed: {
+		    ...mapState(['userInfo']),
 		},
 		methods: {
 			finishHabit(index){
@@ -50,17 +72,42 @@
 				// 		that.disabled=false
 				// 	},1000)	
 				// }
-				//完成放最后
 				if(this.habits[index].showTick!=true && this.disabled!=true){
-					this.habits[index].showTick=true
 					let that=this
-				this.disabled=true
-					setTimeout(function(){
-						let temp = that.habits[index]
-						that.habits.splice(index, 1);
-						that.habits.push(temp)
-						that.disabled=false
-					},500)
+					wx.request({
+						url: 'http://49.232.25.86:1926/habits/check?habit_id='+this.habits[index].id,
+						header: {
+							'Content-Type': 'application/json'
+						},				
+						success: function(res) {
+							console.log(res)
+							if(res.data.code===0){
+								//完成放最后
+								this.habits[index].showTick=true
+								// let that=this
+								this.disabled=true
+								setTimeout(function(){
+									let temp = that.habits[index]
+									that.habits.splice(index, 1);
+									that.habits.push(temp)
+									that.disabled=false
+								},500)
+							}else if(res.data.code===1){
+								uni.showToast({
+									title: '打卡失败',
+									icon:'none',
+									duration: 2000
+								});
+							}
+							else if(res.data.code===2){
+								uni.showToast({
+									title: '不在可打卡的时间',
+									icon:'none',
+									duration: 2000
+								});
+							}
+						}
+					})
 				}
 			},
 			toHabitInfo(index){

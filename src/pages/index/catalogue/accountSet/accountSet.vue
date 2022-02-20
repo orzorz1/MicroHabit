@@ -41,6 +41,10 @@
 		</view>
 		<view class="Info" style="margin-top: 5vh;" @tap="setSex" v-if='((newBirthday==="2000-6-8")&&(newUsername==="twt")&&(newSexual==="其他"))' ></view>
 		</view>
+		<!-- 退出登录 -->
+		<view class="exit">
+			<view style="text-decoration: underline;color: red; font-size: 2.5vh;" @tap="exit">退出登录</view>
+		</view>
 		<!-- 修改信息时的遮罩层 -->
 		<view class="mask1" v-if="changebirthday||changesexual||changeusername"></view>
 		<!-- 修改username弹窗 -->
@@ -175,23 +179,44 @@
 			
 			setBirthday(){
 				this.close()
-				this.birthday=this.newBirthday
+				this.$store.commit('birthday',this.newBirthday)
 			},
 			
 			chooseSexual(e){
 				this.newSexual=this.sexuals[e.detail.value[0]]
-				console.log(this.newSexual)
 			},
 			setSexual(){
 				this.close()
-				this.sexual=this.newSexual
+				this.$store.commit('sexual',this.newSexual)
 			},
 			setSex(){
 				uni.navigateTo({url:'/components/hi'})
 			},
 			setUsername(){
-				this.close()
-				this.username=this.newUsername
+				let that = this
+				wx.request({
+					url: 'http://49.232.25.86:1926/users/change_name?user_name='+this.userInfo.username+'&&user_name_new='+this.newUsername,
+					header: {
+						'Content-Type': 'application/json'
+					},				
+					success: function(res) {
+						if(res.data.code===0){
+							uni.showToast({
+								title: '修改成功',
+								icon:'none',
+								duration: 2000
+							});
+							that.close()
+							that.$store.commit('username',that.newUsername)
+						}else{
+							uni.showToast({
+								title: '用户名已存在',
+								icon:'none',
+								duration: 2000
+							});
+						}
+					}
+				})
 			},
 			
 			changeUsername(){
@@ -207,6 +232,18 @@
 				this.changebirthday=false
 				this.changesexual=false
 				this.changeusername=false
+			},
+			exit(){
+				this.$store.commit('userInfo', {
+						username:"点击登录",
+						avatar:"../../../static/icon/未登录.svg",
+						birthday:"2000-1-1",
+						sexual:"男",
+						score:"0",
+						accounts:[],
+					})
+				this.$store.commit('login')
+				wx.navigateBack({ changed: true })
 			}
 		}
 	}
@@ -344,6 +381,14 @@
 	picker-view-column{
 		line-height: 3vh; 
 		text-align: center;
+	}
+	.exit{
+		position: absolute;
+		display: flex;
+		width: 100vw;
+		justify-content: center;
+		align-items: center;
+		bottom: calc(env(safe-area-inset-bottom));
 	}
 	
 
