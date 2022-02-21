@@ -28,6 +28,7 @@
 </template>
 
 <script>
+	import { mapState, mapGetters } from 'vuex';
 	export default {
 		data() {
 			return {
@@ -35,6 +36,9 @@
 				username:'',
 				password:'',
 			}
+		},
+		computed: {
+		    ...mapState(['url']),
 		},
 		methods: {
 			passwordF_B() {
@@ -50,7 +54,7 @@
 				}
 				else{
 					wx.request({
-						url: 'http://49.232.25.86:1926/users/register?user_name='+this.username+'&&user_password='+this.password, //这里填写你的接口路径
+						url: this.url+'/users/register?user_name='+this.username+'&&user_password='+this.password, //这里填写你的接口路径
 						header: {
 							'Content-Type': 'application/json'
 						},				

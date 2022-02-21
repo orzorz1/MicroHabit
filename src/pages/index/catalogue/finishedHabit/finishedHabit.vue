@@ -25,19 +25,11 @@
 </template>
 
 <script>
+	import { mapState, mapGetters } from 'vuex';
 	export default {
 		data() {
 			return {
 				habits:[
-					{name:"英语微习惯",
-					steps:[
-						{"begin":1,"end":50,"content":"背3个单词"},
-						{"begin":51,"end":70,"content":"背5个单词"},
-						{"begin":71,"end":100,"content":"背7个单词"},
-					],
-					beginDate:"2022/01/01",
-					finishDate:"2022/01/31",
-					days:92},
 					{name:"英语微习惯",
 					steps:[
 						{"begin":1,"end":50,"content":"背6个单词"},
@@ -51,8 +43,49 @@
 				daysWidth:0,
 			}
 		},
+		computed: {
+		    ...mapState(['url','userInfo']),
+		},
 		created(){
 			var that = this
+			
+			wx.request({
+				url: that.url+'/habits/select/trained?user_name='+that.userInfo.name,
+				header: {
+					'Content-Type': 'application/json'
+				},				
+				success: function(res) {
+					if(res.data.code===0){
+						for(let i=0;i<res.data.habits.length;i++){
+							let habit = {}
+							habit.id = res.data.habits[i].id
+							habit.name = res.data.habits[i].name
+							habit.steps = []
+							habit.beginDate = res.data.habits[i].start_date
+							habit.days = res.data.habits[i].check_days
+							wx.request({
+								url: this.url+'/state/select?habit_id='+habit.id,
+								header: {
+									'Content-Type': 'application/json'
+								},				
+								success: function(res) {
+									if(res.data.code===0){
+										for(let j=0;j<res.data.states.length;j++){
+											let state = {}
+											state.begin = res.data.states[j].start_day
+											state.end = res.data.states[j].end_day
+											state.id = res.data.states[j].id
+											state.content = res.data.states[j].content
+											habit.steps.push(state)
+										}
+									}
+								}
+							})
+							that.habits.push(habit)
+						}
+					}
+				}
+			})
 			var obj=wx.createSelectorQuery();
 			obj.selectAll('.days').boundingClientRect();
 			obj.exec(function (rect) {

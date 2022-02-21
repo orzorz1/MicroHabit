@@ -44,7 +44,7 @@
 				</view>
 				<view>
 					<image class="image" style="margin-right: 5vw;" src="../../../static/icon/reset.svg"></image>
-					<image class="image" src="../../../static/icon/delete.svg"></image>
+					<image class="image" src="../../../static/icon/delete.svg" @tap="deleteHabit"></image>
 				</view>
 			</view>
 			
@@ -68,10 +68,31 @@
 			}
 		},
 		onLoad(){
-			wx.setNavigationBarTitle({title: this.currentHabit.name})
+			let currentHabit =  this.currentHabit
+			let that = this
+			wx.request({
+				url: this.url+'/state/select?habit_id='+this.currentHabit.id,
+				header: {
+					'Content-Type': 'application/json'
+				},				
+				success: function(res) {
+					if(res.data.code===0){
+						for(let i=0;i<res.data.states.length;i++){
+							let state = {}
+							state.begin = res.data.states[i].start_day
+							state.end = res.data.states[i].end_day
+							state.id = res.data.states[i].id
+							state.content = res.data.states[i].content
+							currentHabit.steps.push(state)
+						}
+						that.$store.commit("edit",currentHabit)
+					}
+				}
+			})
+			wx.setNavigationBarTitle({title: that.currentHabit.name})
 		},
 		computed: {
-		    ...mapState(['currentHabit','editingHabit']),
+		    ...mapState(['currentHabit','editingHabit','url']),
 		},
 		created(){
 			var that = this
@@ -87,6 +108,35 @@
 				this.$store.commit('editing')
 				this.$children[1].refresh()
 			},
+			deleteHabit(){
+				wx.request({
+					url: this.url+'/habits/delete?habit_id='+this.currentHabit.id,
+					header: {
+						'Content-Type': 'application/json'
+					},				
+					success: function(res) {
+						if(res.data.code===0){
+							uni.showToast({
+								title: '删除成功',
+								icon:'none',
+								duration: 1000
+							});
+							setTimeout(function(){
+								uni.redirectTo({
+								url: '/pages/index/habit/habit',
+							});
+							},1000)
+							
+						}else{
+							uni.showToast({
+								title: '删除失败',
+								icon:'none',
+								duration: 1000
+							});
+						}
+					}
+				})
+			}
 		},
 		components:{
 			editHabit,

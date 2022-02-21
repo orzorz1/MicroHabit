@@ -74,7 +74,7 @@
 	export default {
 		name:"editHabit",
 		computed: {
-		    ...mapState(['currentHabit','editingHabit']),
+		    ...mapState(['currentHabit','editingHabit','url']),
 		},
 		data() {
 			return {
@@ -100,6 +100,19 @@
 				this.$store.commit('editing')
 			},
 			saveEdit(){
+				
+				let that = this				
+				wx.request({
+					url: that.url+'/habits/change_name?habit_id='+that.Info.id+"&&habit_name="+that.Info.name,
+					header: {
+						'Content-Type': 'application/json'
+					},				
+					success: function(res) {
+						if(res.data.code===0){
+							wx.setNavigationBarTitle({title: that.Info.name})
+						}
+					}
+				})
 				if(this.Info.steps[this.Info.steps.length-1].end!=100){
 					uni.showToast({
 						title: '请将最后一个阶段的结束天数设置为100',
@@ -107,8 +120,78 @@
 						duration: 2000
 					});
 				}else{
-					this.closeEdit()
-					this.$store.commit('edit',this.Info)
+					//先删除所有阶段
+					let ids = []
+					for(let i=0;i<that.Info.steps.length;i++){
+						ids.push(that.Info.steps[i].id)
+					}
+					wx.request({
+						url: that.url+"/state/delete", 
+						header: { 
+							"Content-Type": "application/json;charset=UTF-8",
+							
+						}, 
+						method: "POST", 
+						data:JSON.stringify({
+						      "habit_id": that.Info.id,
+						      "states_id": ids,
+						      }),
+						complete: function( res ) { 
+							if(res.data.code===0){
+								//再添加阶段
+								let states = []
+								for(let i=0;i<that.Info.steps.length;i++){
+									let step = {}
+									step.content = that.Info.steps[i].content
+									step.start_day = that.Info.steps[i].begin
+									step.end_day = that.Info.steps[i].end
+									states.push(step)
+								}
+								wx.request({
+									url: that.url+"/state/create", 
+									header: { 
+										"Content-Type": "application/json;charset=UTF-8",
+										
+									}, 
+									method: "POST", 
+									data:JSON.stringify({
+									      "habit_id": that.Info.id,
+									      "states": states,
+									      }),
+									complete: function( res ) { 
+										if(res.data.code===0){
+											uni.showToast({
+												title: '修改成功',
+												icon:'none',
+												duration: 2000
+											});
+											for(let i=0;i<res.data.states_id.length;i++){
+												that.Info.steps[i].id = res.data.states_id[i]
+											}
+											that.closeEdit()
+											that.$store.commit('edit',that.Info)
+											uni.redirectTo({
+												url: '/pages/index/habit/habit',
+											});
+										}else{ 
+											uni.showToast({
+												title: '修改失败',
+												icon:'none',
+												duration: 2000
+											});
+										} 
+									} 
+								}) 
+							}else{ 
+								uni.showToast({
+									title: '修改失败',
+									icon:'none',
+									duration: 2000
+								});
+							} 
+						} 
+					}) 
+					
 				}
 			},
 			addStep(){

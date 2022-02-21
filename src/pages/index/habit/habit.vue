@@ -35,30 +35,53 @@
 		},
 		onLoad(){
 			let that = this
+			let habits = []
 			wx.request({
-				url: 'http://49.232.25.86:1926/habits/select/training?user_name='+this.userInfo.username,
+				url: this.url+'/habits/select/unchecked?user_name='+this.userInfo.username,
 				header: {
 					'Content-Type': 'application/json'
 				},				
 				success: function(res) {
 					if(res.data.code===0){
-						let habits = []
-						console.log(res)
+						// console.log(res)
 						for(let i=0;i<res.data.habits.length;i++){
 							let habit = {}
 							habit.id = res.data.habits[i].id
 							habit.name = res.data.habits[i].name
 							habit.content = res.data.habits[i].content
+							habit.beginDate = res.data.habits[i].start_date
+							habit.days = res.data.habits[i].check_days
 							habit.showTick = false
 							habits.push(habit)
 						}
-						that.habits = habits
+						wx.request({
+							url: that.url+'/habits/select/checked?user_name='+that.userInfo.username,
+							header: {
+								'Content-Type': 'application/json'
+							},				
+							success: function(res) {
+								if(res.data.code===0){
+									// console.log(res)
+									for(let i=0;i<res.data.habits.length;i++){
+										let habit = {}
+										habit.id = res.data.habits[i].id
+										habit.name = res.data.habits[i].name
+										habit.content = res.data.habits[i].content
+										habit.beginDate = res.data.habits[i].start_date
+										habit.days = res.data.habits[i].check_days
+										habit.showTick = true
+										habits.push(habit)
+									}
+									that.habits = habits
+								}
+							}
+						})
 					}
 				}
 			})
 		},
 		computed: {
-		    ...mapState(['userInfo']),
+		    ...mapState(['userInfo','url','currentHabit']),
 		},
 		methods: {
 			finishHabit(index){
@@ -75,7 +98,7 @@
 				if(this.habits[index].showTick!=true && this.disabled!=true){
 					let that=this
 					wx.request({
-						url: 'http://49.232.25.86:1926/habits/check?habit_id='+this.habits[index].id,
+						url: this.url+'/habits/check?habit_id='+this.habits[index].id,
 						header: {
 							'Content-Type': 'application/json'
 						},				
@@ -83,9 +106,9 @@
 							console.log(res)
 							if(res.data.code===0){
 								//完成放最后
-								this.habits[index].showTick=true
+								that.habits[index].showTick=true
 								// let that=this
-								this.disabled=true
+								that.disabled=true
 								setTimeout(function(){
 									let temp = that.habits[index]
 									that.habits.splice(index, 1);
@@ -111,6 +134,14 @@
 				}
 			},
 			toHabitInfo(index){
+				let currentHabit = {}
+				currentHabit.id = this.habits[index].id
+				currentHabit.name = this.habits[index].name
+				currentHabit.steps = []
+				currentHabit.beginDate = this.habits[index].beginDate
+				currentHabit.finishDate = ''
+				currentHabit.days = this.habits[index].days
+				this.$store.commit("edit",currentHabit)
 				uni.navigateTo({url:'/pages/index/habitInfo/habitInfo'})
 			}
 		},

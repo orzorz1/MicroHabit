@@ -38,7 +38,7 @@
 			}
 		},
 		computed: {
-		    ...mapState(['userInfo','hasLogin']),
+		    ...mapState(['userInfo','hasLogin','url']),
 		},
 		methods: {
 			passwordF_B() {
@@ -56,7 +56,7 @@
 				}
 				else{
 					wx.request({
-						url: 'http://49.232.25.86:1926/users/login?user_name='+this.username+'&&user_password='+this.password, 
+						url: this.url+'/users/login?user_name='+this.username+'&&user_password='+this.password, 
 						header: {
 							'Content-Type': 'application/json'
 						},				
@@ -76,7 +76,6 @@
 										'Content-Type': 'application/json'
 									},				
 									success: function(res) {
-										console.log(res)
 										if(res.data.code===0){
 											that.$store.commit('score',res.data.xp)
 										}

@@ -127,7 +127,7 @@
 			this.menuButton_height = menuButtonInfo.height+"px"
 		},
 		computed: {
-		    ...mapState(['userInfo','hasLogin']),
+		    ...mapState(['userInfo','hasLogin','url']),
 		},
 		methods:{
 			showCata(){
@@ -146,6 +146,7 @@
 				}else{
 				this.creatingHabit=true
 				this.steps=[{"content":"","begin":1,"end":5,"show":false}]
+				this.habitName=''
 				}
 			},
 			closeCreate(){
@@ -229,7 +230,7 @@
 				}else{
 					//创建习惯
 					wx.request({
-						url: 'http://49.232.25.86:1926/habits/create?user_name='+this.userInfo.username+'&&habit_name='+this.habitName+'&&start_date=0000-00-00',
+						url: this.url+'/habits/create?user_name='+this.userInfo.username+'&&habit_name='+this.habitName+'&&start_date=0000-00-00',
 						header: {
 							'Content-Type': 'application/json'
 						},
@@ -238,13 +239,12 @@
 								let id = res.data.habit_id
 								//创建阶段
 								wx.request({ 
-									url: "http://49.232.25.86:1926/state/create", 
+									url: that.url+"/state/create", 
 									header: { 
 										"Content-Type": "application/json;charset=UTF-8",
 										
 									}, 
 									method: "POST", 
-									// data: that.json2Form( { habit_id: id, states: states }), 
 									data:JSON.stringify({
 									      "habit_id": id,
 									      "states": states,
@@ -258,10 +258,14 @@
 												duration: 2000
 											});
 											that.closeCreate()
+											uni.redirectTo({
+												url: '/pages/index/habit/habit',
+											});
+											
 										}else{ 
 											// 如果创建阶段失败删除该习惯
 											wx.request({
-												url: 'http://49.232.25.86:1926//habits/delete?habit_id='+id,
+												url: that.url+'/habits/delete?habit_id='+id,
 												header: {
 													'Content-Type': 'application/json'
 												},				

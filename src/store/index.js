@@ -3,6 +3,7 @@ import Vuex from 'vuex'
 Vue.use(Vuex)
 const store = new Vuex.Store({
     state: {
+		url:'http://49.232.25.86:1926',
 		hasLogin:false,
 		userInfo:{
 			username:"点击登录",
@@ -16,16 +17,7 @@ const store = new Vuex.Store({
 					],
 		},
 		currentHabit:{
-			name:"英语微习惯",
-			steps:[
-				{"begin":1,"end":50,"content":"背3个单词"},
-				{"begin":51,"end":70,"content":"背5个单词"},
-				{"begin":71,"end":100,"content":"背7个单词"},
-			],
-			beginDate:"2022/01/01",
-			finishDate:"2022/01/31",
-			days:64,
-		},
+			},
 		editingHabit:false,
 	},
     mutations: {
@@ -55,6 +47,9 @@ const store = new Vuex.Store({
 		},
 		birthday(state,obj){
 			this.state.userInfo.birthday = obj
+		},
+		id(state,obj){
+			this.state.currentHabit.id = obj
 		}
 	},
     actions: {

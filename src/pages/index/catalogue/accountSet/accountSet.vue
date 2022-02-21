@@ -31,6 +31,13 @@
 				<image src="../../../../static/icon/arrow.png" style="width: 2.2vh;height: 2.2vh;"></image>
 				</view>
 			</view>
+			<view class="divLine"></view>
+			<view class="Info">
+				<view class="font_left">修改密码</view>
+				<view @tap="changePassword" class="btn">
+				<image src="../../../../static/icon/arrow.png" style="width: 2.2vh;height: 2.2vh;"></image>
+				</view>
+			</view>
 		</view>
 		<!-- 绑定账号 -->
 		<view style="width: 90vw;margin-left: 5vw;border-radius: 20px; background-color: #eef9ff;">
@@ -57,6 +64,19 @@
 			<!-- username输入框 -->
 			<view>
 				<input class="input_username" placeholder="请输入昵称" maxlength="10" v-model="newUsername"/>
+			</view>
+		</view>
+		<!-- 修改密码弹窗 -->
+		<view v-if="changepassword" class="changeUsername" style="height:25vh ;">
+			<view class="top">
+				<view style="margin-left: 15vw;" @tap="close">取消</view>
+				<view style="font-size: 2.2vh;font-weight: 500;">更改密码</view>
+				<view style="margin-right: 15vw; color: #3f8dcf;" @tap="setPassword">确定</view>
+			</view>
+			<!-- username输入框 -->
+			<view>
+				<input class="input_username" style="margin-top: 2vh;" placeholder="请输入原密码" maxlength="16" v-model="originalPassword"/>
+				<input class="input_username" style="margin-top: 2vh;" placeholder="请输入新密码" maxlength="16" v-model="newPassword"/>
 			</view>
 		</view>
 		<!-- 修改性别弹窗 -->
@@ -105,10 +125,13 @@
 				changeusername:false,
 				changesexual:false,
 				changebirthday:false,
+				changepassword:false,
 				
 				sexuals:['保密','男','女','其他'],
 				newSexual:'保密',
 				newUsername:'',
+				originalPassword:'',
+				newPassword:'',
 				
 				//日期选择器用到的数据
 				YYYY:[],
@@ -136,7 +159,7 @@
 			}
 		},
 		computed: {
-		    ...mapState(['userInfo']),
+		    ...mapState(['userInfo','url']),
 		},
 		methods: {
 			//调整滚轮,使日期均存在,且不超过当前日期
@@ -195,7 +218,7 @@
 			setUsername(){
 				let that = this
 				wx.request({
-					url: 'http://49.232.25.86:1926/users/change_name?user_name='+this.userInfo.username+'&&user_name_new='+this.newUsername,
+					url: this.url+'/users/change_name?user_name='+this.userInfo.username+'&&user_name_new='+this.newUsername,
 					header: {
 						'Content-Type': 'application/json'
 					},				
@@ -218,6 +241,31 @@
 					}
 				})
 			},
+			setPassword(){
+				let that = this
+				wx.request({
+					url: this.url+'/users/change_password?user_name='+this.userInfo.username+'&&user_password='+this.originalPassword+'&&user_password_new='+this.newPassword,
+					header: {
+						'Content-Type': 'application/json'
+					},				
+					success: function(res) {
+						if(res.data.code===0){
+							uni.showToast({
+								title: '修改成功',
+								icon:'none',
+								duration: 2000
+							});
+							that.close()
+						}else{
+							uni.showToast({
+								title: '修改失败',
+								icon:'none',
+								duration: 2000
+							});
+						}
+					}
+				})
+			},
 			
 			changeUsername(){
 				this.changeusername=true
@@ -228,10 +276,14 @@
 			changeBirthday(){
 				this.changebirthday=true
 			},	
+			changePassword(){
+				this.changepassword=true
+			},	
 			close(){
 				this.changebirthday=false
 				this.changesexual=false
 				this.changeusername=false
+				this.changepassword=false
 			},
 			exit(){
 				this.$store.commit('userInfo', {
