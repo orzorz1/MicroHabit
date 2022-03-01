@@ -78,6 +78,7 @@
 		},
 		data() {
 			return {
+				ids:[],
 				Info:{},
 				numbers:["Ⅰ","Ⅱ","Ⅲ","Ⅳ","Ⅴ"],
 				disableInput:false,
@@ -94,14 +95,18 @@
 				this.Info = JSON.parse(JSON.stringify(this.currentHabit))  //深度克隆
 				for(let i=0;i<this.Info.steps.length;i++){
 					this.Info.steps[i].show = false
+					this.ids.push(this.Info.steps[i].id)
 				}
+				console.log(this.ids)
 			},
 			closeEdit(){
 				this.$store.commit('editing')
 			},
 			saveEdit(){
-				
-				let that = this				
+				let that = this	
+				//获取当前习惯的所有id
+
+				//修改习惯名称
 				wx.request({
 					url: that.url+'/habits/change_name?habit_id='+that.Info.id+"&&habit_name="+that.Info.name,
 					header: {
@@ -121,10 +126,7 @@
 					});
 				}else{
 					//先删除所有阶段
-					let ids = []
-					for(let i=0;i<that.Info.steps.length;i++){
-						ids.push(that.Info.steps[i].id)
-					}
+					console.log(that.ids)
 					wx.request({
 						url: that.url+"/state/delete", 
 						header: { 
@@ -134,9 +136,10 @@
 						method: "POST", 
 						data:JSON.stringify({
 						      "habit_id": that.Info.id,
-						      "states_id": ids,
+						      "states_id": that.ids,
 						      }),
 						complete: function( res ) { 
+							console.log(res)
 							if(res.data.code===0){
 								//再添加阶段
 								let states = []
@@ -170,12 +173,12 @@
 											}
 											that.closeEdit()
 											that.$store.commit('edit',that.Info)
-											uni.redirectTo({
-												url: '/pages/index/habit/habit',
-											});
+											// uni.redirectTo({
+											// 	url: '/pages/index/habit/habit',
+											// });
 										}else{ 
 											uni.showToast({
-												title: '修改失败',
+												title: '修改失败1',
 												icon:'none',
 												duration: 2000
 											});
