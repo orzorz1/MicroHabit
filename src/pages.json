@@ -84,9 +84,10 @@
             "path" : "pages/index/catalogue/finishedHabit/finishedHabit",
             "style" :                                                                                    
             {
-                "navigationBarTitleText": "",
-				"navigationStyle":"custom", 
-                "enablePullDownRefresh": false
+                "navigationBarTitleText": "已完成习惯",
+                "enablePullDownRefresh": false,
+				"navigationBarBackgroundColor":"#91bfd7"
+				
             }
             
         }

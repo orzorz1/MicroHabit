@@ -98,6 +98,9 @@
 </script>
 
 <style>
+	body{
+		background-color: #91bfd7;
+	}
 	.habits{
 		width: 100vw;
 		height: 80vh;

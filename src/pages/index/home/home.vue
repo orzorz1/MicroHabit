@@ -2,7 +2,7 @@
 	<view>
 		<TopBar></TopBar>
 		<BottomNavigation></BottomNavigation>
-		<view style="margin-top: 40vh;margin-left: 40vw;">bug反馈：248823307(qq)</view>
+		<view style="margin-top: 85vh;margin-left: 25vw;">bug反馈：248823307(qq)</view>
 	</view>
 </template>
 
