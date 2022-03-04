@@ -65,6 +65,7 @@
     "@vue/shared": "^3.0.0",
     "core-js": "^3.6.5",
     "flyio": "^0.6.2",
+    "js-md5": "^0.7.3",
     "md5": "^2.3.0",
     "regenerator-runtime": "^0.12.1",
     "uni-simple-router": "^2.0.8-beta.3",

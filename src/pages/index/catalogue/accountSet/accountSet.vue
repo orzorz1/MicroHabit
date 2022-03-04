@@ -117,6 +117,7 @@
 </template>
 
 <script>
+	import md5 from "js-md5";
 	import { mapState, mapGetters } from 'vuex';
 	export default {
 		data() {
@@ -244,7 +245,7 @@
 			setPassword(){
 				let that = this
 				wx.request({
-					url: this.url+'/users/change_password?user_name='+this.userInfo.username+'&&user_password='+this.originalPassword+'&&user_password_new='+this.newPassword,
+					url: this.url+'/users/change_password?user_name='+this.userInfo.username+'&&user_password='+md5(this.originalPassword)+'&&user_password_new='+md5(this.newPassword),
 					header: {
 						'Content-Type': 'application/json'
 					},				

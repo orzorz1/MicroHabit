@@ -28,6 +28,7 @@
 </template>
 
 <script>
+	import md5 from "js-md5"
 	import { mapState, mapGetters } from 'vuex';
 	export default {
 		data() {
@@ -54,7 +55,7 @@
 				}
 				else{
 					wx.request({
-						url: this.url+'/users/register?user_name='+this.username+'&&user_password='+this.password, //这里填写你的接口路径
+						url: this.url+'/users/register?user_name='+this.username+'&&user_password='+md5(this.password), //这里填写你的接口路径
 						header: {
 							'Content-Type': 'application/json'
 						},				

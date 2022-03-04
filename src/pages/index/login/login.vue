@@ -28,6 +28,7 @@
 </template>
 
 <script>
+	import md5 from "js-md5"
 	import { mapState, mapGetters } from 'vuex';
 	export default {
 		data() {
@@ -56,7 +57,7 @@
 				}
 				else{
 					wx.request({
-						url: this.url+'/users/login?user_name='+this.username+'&&user_password='+this.password, 
+						url: this.url+'/users/login?user_name='+this.username+'&&user_password='+md5(this.password), 
 						header: {
 							'Content-Type': 'application/json'
 						},				
@@ -69,7 +70,7 @@
 								});
 								that.$store.commit('username',un)
 								that.$store.commit('login')
-								that.$store.commit('avatar',"https://s2.loli.net/2022/02/12/F3KIfEVMzBaGti1.jpg")
+								that.$store.commit('avatar',"https://img2.baidu.com/it/u=1156844833,2794042298&fm=253&fmt=auto&app=120&f=JPEG?w=500&h=500")
 								wx.request({
 									url: 'http://49.232.25.86:1926/users/basc_msg?user_name='+un, 
 									header: {
