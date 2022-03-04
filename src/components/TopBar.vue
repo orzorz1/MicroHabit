@@ -212,6 +212,14 @@
 				}				
 			},
 			addHabit(){
+				if(this.habitName===""){
+					uni.showToast({
+						title: '习惯名不能为空',
+						icon:'none',
+						duration: 2000
+					});
+					return
+				}
 				let that = this
 				let states = []
 				for(let i=0;i<this.steps.length;i++){

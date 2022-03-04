@@ -3,7 +3,8 @@ import Vuex from 'vuex'
 Vue.use(Vuex)
 const store = new Vuex.Store({
     state: {
-		url:'http://49.232.25.86:1926',
+		url:'https://www.orzorz.top',
+		// url:'http://49.232.25.86:1926',
 		hasLogin:false,
 		userInfo:{
 			username:"点击登录",

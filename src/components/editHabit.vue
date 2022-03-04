@@ -92,17 +92,28 @@
 		},
 		methods:{
 			refresh(){
+				let id = []
 				this.Info = JSON.parse(JSON.stringify(this.currentHabit))  //深度克隆
 				for(let i=0;i<this.Info.steps.length;i++){
 					this.Info.steps[i].show = false
-					this.ids.push(this.Info.steps[i].id)
+					id.push(this.Info.steps[i].id)
 				}
+				this.ids = id
+				console.log(this.Info)
 				console.log(this.ids)
 			},
 			closeEdit(){
 				this.$store.commit('editing')
 			},
 			saveEdit(){
+				if(this.Info.name===""){
+					uni.showToast({
+						title: '习惯名不能为空',
+						icon:'none',
+						duration: 2000
+					});
+					return
+				}
 				let that = this	
 				//获取当前习惯的所有id
 

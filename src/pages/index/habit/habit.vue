@@ -42,6 +42,7 @@
 					'Content-Type': 'application/json'
 				},				
 				success: function(res) {
+					console.log(res)
 					if(res.data.code===0){
 						// console.log(res)
 						for(let i=0;i<res.data.habits.length;i++){
@@ -60,6 +61,7 @@
 								'Content-Type': 'application/json'
 							},				
 							success: function(res) {
+								console.log(res)
 								if(res.data.code===0){
 									// console.log(res)
 									for(let i=0;i<res.data.habits.length;i++){
