@@ -8,7 +8,7 @@ const store = new Vuex.Store({
 		hasLogin:false,
 		userInfo:{
 			username:"点击登录",
-			avatar:"../../../static/icon/未登录.svg",
+			avatar:"../../../static/icon/WeiDengLu.svg",
 			birthday:"2000-1-1",
 			sexual:"男",
 			score:"0",

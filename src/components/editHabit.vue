@@ -61,8 +61,8 @@
 				</view>
 				<!-- 添加、删除阶段按钮 -->
 				<view class="button">
-					<image src="../static/icon/添加.svg" class="addStep" @tap="addStep" v-if="(Info.steps.length<5)&&Info.steps[Info.steps.length-1].end!=100"></image>
-					<image src="../static/icon/删除.svg" class="addStep" @tap="deleteStep" v-if="Info.steps.length!=1"></image>
+					<image src="../static/icon/add.svg" class="addStep" @tap="addStep" v-if="(Info.steps.length<5)&&Info.steps[Info.steps.length-1].end!=100"></image>
+					<image src="../static/icon/del.svg" class="addStep" @tap="deleteStep" v-if="Info.steps.length!=1"></image>
 				</view>
 			</view>
 		</view>
