@@ -38,6 +38,13 @@
 				<image src="../../../../static/icon/arrow.png" style="width: 2.2vh;height: 2.2vh;"></image>
 				</view>
 			</view>
+			<view class="divLine"></view>
+			<view class="Info">
+				<view class="font_left">清理缓存</view>
+				<view @tap="clean" class="btn">
+				<image src="../../../../static/icon/arrow.png" style="width: 2.2vh;height: 2.2vh;"></image>
+				</view>
+			</view>
 		</view>
 		<!-- 绑定账号 -->
 		<view style="width: 90vw;margin-left: 5vw;border-radius: 20px; background-color: #eef9ff;">
@@ -87,7 +94,7 @@
 				<view style="margin-right: 5vw; color: #3f8dcf;" @click="setSexual">确定</view>
 			</view>
 			<!-- 性别选择器-->
-			<picker-view class="sexualPicker" @change="chooseSexual">
+			<picker-view class="sexualPicker" immediate-change=true @change="chooseSexual">
 				<picker-view-column>
 					<view v-for="sex in sexuals">{{sex}}</view>
 				</picker-view-column>
@@ -101,7 +108,7 @@
 				<view style="margin-right: 5vw; color: #3f8dcf;" @click="setBirthday">确定</view>
 			</view>
 			<!-- 日期选择器 -->
-			<picker-view class="birthdayPicker" @change="chooseDate" :value="now">
+			<picker-view class="birthdayPicker" immediate-change=true @change="chooseDate" :value="now">
 				<picker-view-column>
 					<view v-for="Y in YYYY">{{Y}}年</view>
 				</picker-view-column>
@@ -297,6 +304,30 @@
 					})
 				this.$store.commit('login')
 				wx.navigateBack({ changed: true })
+			},
+			sleep(d){
+			  for(var t = Date.now();Date.now() - t <= d;);
+			},
+			clean(){
+				uni.showToast({title: '清理中.',	icon:'none',duration: 300});
+				setTimeout(function(){uni.showToast({title: '清理中..',icon:'none',duration: 300});},300)
+				setTimeout(function(){uni.showToast({title: '清理中...',icon:'none',duration: 300});},600)
+				setTimeout(function(){uni.showToast({title: '清理中.',icon:'none',duration: 300});},900)
+				setTimeout(function(){uni.showToast({title: '清理中..',icon:'none',duration: 300});},1200)
+				setTimeout(function(){uni.showToast({title: '清理中...',icon:'none',duration: 300});},1500)
+				setTimeout(function(){uni.showToast({title: '清理中.',icon:'none',duration: 300});},1800)
+				setTimeout(function(){uni.showToast({title: '清理中..',icon:'none',duration: 300});},2100)
+				setTimeout(function(){uni.showToast({title: '清理中...',icon:'none',duration: 300});},2400)
+				setTimeout(function(){uni.showToast({title: '清理中.',icon:'none',duration: 300});},2700)
+				setTimeout(function(){uni.showToast({title: '清理中..',icon:'none',duration: 300});},3000)
+				setTimeout(function(){uni.showToast({title: '清理中...',icon:'none',duration: 300});},3300)
+				setTimeout(function(){
+					uni.showToast({
+						title: '清理成功',
+						icon:'none',
+						duration: 1000
+					});
+				},4000)
 			}
 		}
 	}

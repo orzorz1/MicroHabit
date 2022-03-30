@@ -4,7 +4,7 @@
 		<view class="home">
 			<view class="user">
 				<image class="avatar" :src="userInfo.avatar" @tap="login"></image>
-				<view class="username">{{userInfo.username}}</view>
+				<view class="username" @tap="login">{{userInfo.username}}</view>
 				<view class="score">xp:{{userInfo.score}}</view>
 			</view>
 			<view class="myCatalogue" v-for="item in items" @tap="goto(item.id)">

@@ -46,7 +46,7 @@
 								<image src="../static/icon/yes.svg" style="width: 3vh;height: 3vh;margin-right: 3vw; margin-top:1vh" @tap="setTime(index)"></image>
 							</view>
 						</view>
-						<picker-view class="timePicker" @change="chooseTime">
+						<picker-view class="timePicker" immediate-change=true @change="chooseTime">
 							<picker-view-column style="left: 12vw; font-size: 2vh;">
 								<view >第{{begin}}天</view>
 							</picker-view-column>
